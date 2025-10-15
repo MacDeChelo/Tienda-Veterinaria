@@ -1,0 +1,91 @@
+
+package clinicaveterinaria;
+import java.util.Scanner;
+public class ClinicaVeterinaria {
+
+    public static void main(String[] args) {
+       Scanner sc = new Scanner(System.in);
+       HotelAcuavida hotel = new HotelAcuavida();
+       int opcion;
+       
+       do{
+           System.out.println("\n === Hotel ACUAVIDA ===");
+           System.out.println("1. Agregar mascota");
+           System.out.println("2. Mostrar todas las mascotas");
+           System.out.println("3. Mostrar cantidad de mascotas ");
+           System.out.println("4. Salir");
+           System.out.println("Elige una opcion: ");
+           opcion = sc.nextInt();
+           sc.nextLine();
+         switch(opcion){
+             case 1: 
+                agregarMascota(hotel, sc);
+                break;
+             case 2:
+                hotel.listaMascotas();
+                break;
+             case 3:
+                 System.out.println("Cantidad de mascotas alojadas" + hotel.cantidadDeMascotas());
+                 break;
+             case 4:
+                 System.out.println("Saliendo del sistema... ¡Hasta Luego!");
+                 break;
+             default:
+                 System.out.println("Opcion no valida, intente nuevamente");
+         }
+       }while (opcion != 4);            
+    } 
+
+
+    public static void agregarMascota(HotelAcuavida hotel, Scanner sc){
+        System.out.println("\n --- Agregar Mascota --- ");
+        System.out.println("Tipo de mascota: ");
+        System.out.println("1. Pez ");
+        System.out.println("2. Tortuga ");
+        System.out.println("3. Ave Exotica ");
+        System.out.println("Eliga una opcion: ");
+        int tipo = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("Codigo animal: ");
+        String codigo = sc.nextLine();
+        System.out.println("Nombre: ");
+        String nombre = sc.nextLine();
+        System.out.println("Edad");
+        int edad = sc.nextInt();
+        System.out.println("Peso: ");
+        double peso = sc.nextDouble();
+        System.out.println("Dias alojados: ");
+        int diasAlojados = sc.nextInt();
+        System.out.println("¿ Requiere un cuidado especial ? (True/ False)");
+        boolean cuidadoEspecial = sc.nextBoolean();
+        
+        Mascota nuevaMascota = null;
+        
+        switch(tipo){
+            case 1 ->{
+                sc.nextLine();
+                System.out.println("Tipo de agua (Dulce / Salada) : ");
+                String tipoDeAgua = sc.nextLine();
+                Pez pez = new Pez(tipoDeAgua, codigo, nombre, edad, peso, diasAlojados, cuidadoEspecial);
+                nuevaMascota = pez;
+            }
+            case 2 ->{
+                System.out.println("Horas al Sol");
+                double tiempoSol = sc.nextDouble();
+                Tortuga tortuga = new Tortuga(tiempoSol, codigo, nombre, edad, peso, diasAlojados, cuidadoEspecial);
+                nuevaMascota = tortuga;
+            }
+            case 3 -> {
+                System.out.println("Cantidad de palabras imitadas: ");
+                int palabrasImitadas = sc.nextInt();
+                AveExotica ave = new AveExotica(palabrasImitadas, codigo, nombre, edad, peso, diasAlojados, cuidadoEspecial);
+                nuevaMascota = ave;
+            }
+            default -> System.out.println("Tipo no válido, no se agregó la mascota.");
+        }
+        if(nuevaMascota != null){
+            hotel.agregarMascota(nuevaMascota);
+        }
+    }
+}
